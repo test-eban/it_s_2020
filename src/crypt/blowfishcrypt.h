@@ -14,7 +14,7 @@ public:
     QByteArray* encrypt(QByteArray* clear) override;
     QByteArray* decrypt(QByteArray* crypt) override;
     void setKey(QByteArray *key) override;
-    void setIv (QByteArray *IV);
+    void setIv (QByteArray *iv);
 
 private:
     BF_KEY m_bfKey;

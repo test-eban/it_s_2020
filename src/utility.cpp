@@ -4,9 +4,9 @@ Utility::Utility()
 {
 }
 
-QString Utility::Sha256(const QString* toHash)
+QString Utility::Sha512(const QString* toHash)
 {
-
+//    sha
 }
 
 const unsigned char* Utility::QByteArrayToConstUChar(const QByteArray* arr)

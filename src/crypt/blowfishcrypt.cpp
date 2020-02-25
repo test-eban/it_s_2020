@@ -18,7 +18,7 @@ QByteArray* BlowfishCrypt::encrypt(QByteArray* clear)
 
     ///////////////////////////////////////////////// encrypt
     unsigned char* out = new unsigned char[1024*1024];
-    std::cout << "message: " << clear->toStdString() << "\nout: " << out << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
+//    std::cout << "message: " << clear->toStdString() << "\nout: " << out << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
     BF_cbc_encrypt(Utility::QByteArrayToConstUChar(clear), out, clear->length(), &m_bfKey, Utility::QByteArrayToUChar(m_iv), BF_ENCRYPT);
     std::cout << "message: " << clear->toStdString() << "\nout: " << out << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
 
@@ -65,9 +65,9 @@ void BlowfishCrypt::setKey(QByteArray* newKey)
 
 void BlowfishCrypt::setIv(QByteArray *iv)
 {
-//    if (iv->length() != 8)
-//    {
-//        throw "Initialization vector must be exactly 8 byte long!";
-//    }
+    if (iv->length() <= 4)
+    {
+        throw "Initialization vector must be exactly 8 byte long!";
+    }
     m_iv = new QByteArray(*iv);
 }

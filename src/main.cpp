@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
 //    QCoreApplication a(argc, argv);
 
     QByteArray* inputKey = new QByteArray("1234567890123456");
-    QByteArray* inputIv = new QByteArray("");
-    QByteArray* msg = new QByteArray("Klartext1234567");
+    QByteArray* inputIv = new QByteArray("\n\n\n\n\n");
+    QByteArray* msg = new QByteArray("Klartext1234");
 
     BlowfishCrypt* blowfish = new BlowfishCrypt();
     blowfish->setKey(inputKey);
