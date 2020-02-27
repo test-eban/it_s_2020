@@ -16,7 +16,7 @@ public:
     virtual QByteArray* getKey();
 
 protected:
-    QByteArray* key;
+    QByteArray* m_key;
 };
 
 #endif // CRYPTCLASSBASE_H

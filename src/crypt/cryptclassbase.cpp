@@ -7,5 +7,5 @@ CryptClassBase::CryptClassBase()
 
 QByteArray* CryptClassBase::getKey()
 {
-    return key;
+    return m_key;
 }

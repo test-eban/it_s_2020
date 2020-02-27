@@ -7,7 +7,7 @@ BlowfishCrypt::BlowfishCrypt()
 
 QByteArray* BlowfishCrypt::encrypt(QByteArray* clear)
 {
-    if (key == nullptr)
+    if (m_key == nullptr)
     {
         throw "You first must run BlowfishCrypt::setKey(QByteArray* newKey)!";
     }
@@ -56,10 +56,14 @@ void BlowfishCrypt::setKey(QByteArray* newKey)
         {
             throw "mimimi";
         }
+        if (newKey->length() < /*minKeyLengthInBytes*/ 4)
+        {
+            throw "mimimi";
+        }
 
         int len = newKey->length();
-        key = newKey;
-        BF_set_key(&m_bfKey, len, Utility::QByteArrayToConstUChar(key));
+        m_key = newKey;
+        BF_set_key(&m_bfKey, len, Utility::QByteArrayToConstUChar(m_key));
     }
 }
 

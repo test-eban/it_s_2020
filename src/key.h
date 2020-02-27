@@ -2,17 +2,24 @@
 #define KEY_H
 
 #include <QByteArray>
+#include <iostream>
+
+#include <fcntl.h>
+#include <unistd.h>
+
+#include "utility"
 
 class Key
 {
 public:
     Key();
 
-    QByteArray* passwordToKey(QByteArray* password);
-    QByteArray* passwordToKey(QString* password);
-    QByteArray* passwordToKey(const char* password);
+    static QByteArray* passwordToKey(QByteArray* password);
+    static QByteArray* passwordToKey(QString* password);
+    static QByteArray* passwordToKey(const char* password);
 
-    QByteArray* randomKey();
+    static unsigned char* randomKey(unsigned int length);
+//    QByteArray* qRandomKey(unsigned int length);
 };
 
 #endif // KEY_H

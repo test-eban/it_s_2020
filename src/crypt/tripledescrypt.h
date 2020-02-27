@@ -10,7 +10,7 @@ public:
 
     QByteArray* encrypt(QByteArray* clear) override;
     QByteArray* decrypt(QByteArray* crypt) override;
-    void setKey(QByteArray *key) override;
+    void setKey(QByteArray *m_key) override;
 };
 
 #endif // TRIPLEDES_H
