@@ -12,12 +12,12 @@ int main(int argc, char *argv[])
 //    QCoreApplication a(argc, argv);
 
 //////////////////////////////////////////////////// crypt blowfish
-//    QByteArray* inputKey = new QByteArray("1234567890123456");
-//    QByteArray* inputIv = new QByteArray("\n\n\n\n\n");
-//    QByteArray* msg = new QByteArray("Klartext1234");
+//    QByteArray* inputKey = new QByteArray("12345678");
+//    QByteArray* inputIv = new QByteArray("12345678");
+//    QByteArray* msg = new QByteArray("Klartext1111Klartext2222Klartext3333Klartext4444Klartext5555Klartext6666Klartext7777Klartext8888Klartext9999Klartext0000");
 
 //    BlowfishCrypt* blowfish = new BlowfishCrypt();
-//    blowfish->setKey(inputKey);
+//    blowfish->setKey1(inputKey);
 //    blowfish->setIv(inputIv);
 
 //    QByteArray* crypt = blowfish->encrypt(msg);
@@ -28,38 +28,57 @@ int main(int argc, char *argv[])
 
 
 //////////////////////////////////////////////////// crypt aes
-//    QByteArray* inputKey = new QByteArray("1234567890123456");
-    QByteArray* inputKey = new QByteArray("12345678901234567890123456789012");
-//    QByteArray* inputIv = new QByteArray("12345678");
-    QByteArray* inputIv = new QByteArray("1234567890123456");
-    QByteArray* msg = new QByteArray("Klartext1234");
+//    QByteArray* inputKey = new QByteArray("12345678901234567890123456789012");
+//    QByteArray* inputIv = new QByteArray("1234567890123456");
+//    QByteArray* msg = new QByteArray("Klartext1111klartext2222Klartext3333Klartext4444Klartext5555Klartext6666Klartext7777Klartext8888Klartext9999Klartext0000");
+////    QByteArray* msg = new QByteArray("The quick brown fox jumps over the lazy dog");
 
-    AesCrypt* aes = new AesCrypt();
-    aes->setKey(inputKey);
-    aes->setIv(inputIv);
+//    AesCrypt* aes = new AesCrypt();
+//    try {
+//        aes->setKey1(inputKey);
+//        aes->setIv(inputIv);
 
-    QByteArray* crypt = aes->encrypt(msg);
-    QByteArray* clear = aes->decrypt(crypt);
+//    } catch (const char* e) {
+//        std::cerr << e;
+//    }
 
-    std::cout << "crypt(hex): " << crypt->toHex().toStdString() << "\nclear: " << clear->toStdString() << std::endl;
+//    QByteArray* crypt = aes->encrypt(msg);
+//    QByteArray* clear = aes->decrypt(crypt);
+
+//    std::cout << "crypt(hex): " << crypt->toHex().toStdString() << "\nclear: " << clear->toStdString() << std::endl;
 //////////////////////////////////////////////////// crypt aes
 
 
+//////////////////////////////////////////////////// crypt 3DES
+//    QByteArray* msg = new QByteArray("Klartext12345678");
+
+//    TripleDesCrypt* tdes = new TripleDesCrypt();
+//    tdes->setKey1(new QByteArray("12345678"));
+//    tdes->setKey2(new QByteArray("23456789"));
+//    tdes->setKey3(new QByteArray("34567890"));
+
+//    tdes->setIv(new QByteArray("87654321"));
+
+//    QByteArray* crypt = tdes->encrypt(msg);
+//    QByteArray* clear = tdes->decrypt(crypt);
+
+//    std::cout << "crypt(hex): " << crypt->toHex().toStdString() << std::endl << "clear: " << clear->toStdString() << std::endl;
+//////////////////////////////////////////////////// crypt 3DES
+
+
 //////////////////////////////////////////////////// rand key
-//    const unsigned char* key = Key::randomKey(8);
-//    std::cout << "12345678" << std::endl;
-//    std::cout << key << std::endl;
-//    std::cout << sizeof(key) << std::endl;
+//    QByteArray* key = Key::randomKey(64);
+//    std::cout << "1234567890123456789012345678901234567890123456789012345679801234" << std::endl;
+//    std::cout << key->toStdString() << std::endl;
+//    std::cout << sizeof(key->data()) << std::endl;
 //////////////////////////////////////////////////// rand key
 
 
 //////////////////////////////////////////////////// sha512
 //    QByteArray* toHash = new QByteArray("Wahrheit ist tut weh, neh?!");
-//    const unsigned char* in = Utility::QByteArrayToConstUChar(toHash);
-//    unsigned char* out = Utility::Sha512(in, toHash->length());
-//    std::cout << "SHA512: " <<std::endl << out << std::endl << Utility::toConstChar(out) << std::endl;
-//    toHash->setRawData(Utility::toConstChar(out), SHA512_DIGEST_LENGTH);
-//    std::cout << toHash->toHex().toStdString() << std::endl;
+//    QByteArray* out = Utility::Sha512(toHash, toHash->length());
+//    std::cout << "SHA512: " <<std::endl << out->toStdString() << std::endl;
+//    std::cout << out->toHex().toStdString() << std::endl;
 //////////////////////////////////////////////////// sha512
     //    return a.exec();
 

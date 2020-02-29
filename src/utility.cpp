@@ -1,44 +1,23 @@
 #include "utility.h"
 
-Utility::Utility()
-{}
-
-// https://www.openssl.org/docs/man1.0.2/man3/SHA512.html
-unsigned char* Utility::Sha512(const unsigned char* toHash, unsigned int len)
+QByteArray* Utility::Sha512(QByteArray* input, unsigned int inputLen)
 {
-//    const EVP_MD* md = EVP_sha512();
-//    EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
-
+    const unsigned char* in = toConstUnsignedChar(input);
     unsigned char* out = new unsigned char[SHA512_DIGEST_LENGTH];
-    SHA512(toHash, len, out);
+    try
+    {
+        SHA512(in, inputLen, out);
+    } catch (const char* e)
+    {
+        std::cerr << e;
+    }
 
-    return out;
-
-//    EVP_DigestInit_ex(mdctx, md, nullptr);
-//    EVP_DigestUpdate()
-//    EVP_MD_
+    return new QByteArray(toConstChar(out));
 }
 
-const unsigned char* Utility::QByteArrayToConstUChar(const QByteArray* arr)
+const char* Utility::toConstChar(char* chr)
 {
-    const char* chr = arr->data();
-    const unsigned char* cuchr =  reinterpret_cast<const unsigned char* > (chr);
-
-    return cuchr;
-}
-
-unsigned char* Utility::QByteArrayToUChar(const QByteArray *arr)
-{
-    const char* chr = arr->data();
-    unsigned char* uchr = new unsigned char[arr->size()];
-    std::memcpy(uchr, chr, arr->size()+1);
-
-    return uchr;
-}
-
-const char* Utility::toConstChar(char* cchr)
-{
-    return reinterpret_cast<const char*>(cchr);
+    return reinterpret_cast<const char*>(chr);
 }
 
 const char* Utility::toConstChar(const unsigned char* cuchr)
@@ -61,13 +40,28 @@ const unsigned char* Utility::toConstUnsignedChar(const char* cchr)
     return reinterpret_cast<const unsigned char*>(cchr);
 }
 
-const unsigned char* Utility::toConstUnsignedChar(unsigned char* cuchr)
+const unsigned char* Utility::toConstUnsignedChar(unsigned char* uchr)
 {
-    return reinterpret_cast<const unsigned char*>(cuchr);
+    return reinterpret_cast<const unsigned char*>(uchr);
 }
 
+const unsigned char* Utility::toConstUnsignedChar(const QByteArray* arr)
+{
+    char *chr = new char[arr->size() + 1];
+    strcpy(chr, arr->data());
+//    const char* chr = arr->data();
+    const unsigned char* cuchr =  toConstUnsignedChar(chr);
 
-//QByteArray* Utility::toHex(const QByteArray *arr)
-//{
-//    QByteArray* result = new QByteArray();
-//}
+    return cuchr;
+}
+
+unsigned char* Utility::toUnsignedChar(const QByteArray *arr)
+{
+    char* chr= new char[arr->size() + 1];
+    strcpy(chr, arr->data());
+
+    unsigned char* uchr = new unsigned char[arr->size() + 1];
+    std::memcpy(uchr, chr, arr->size()+1);
+
+    return uchr;
+}

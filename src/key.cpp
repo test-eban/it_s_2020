@@ -1,26 +1,13 @@
 #include "key.h"
 
-Key::Key()
+QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
 {
-
+    QByteArray* result = Utility::Sha512(password, password->length());
+    result->resize(keyLength);
+    return result;
 }
 
-QByteArray* Key::passwordToKey(QByteArray* password)
-{
-    return new QByteArray();
-}
-
-QByteArray* Key::passwordToKey(QString* password)
-{
-    return new QByteArray();
-}
-
-QByteArray* Key::passwordToKey(const char* password)
-{
-    return new QByteArray();
-}
-
-unsigned char* Key::randomKey(unsigned int length)
+QByteArray* Key::randomKey(unsigned int length)
 {
     int randomData = open("/dev/urandom", O_RDONLY);
     if (randomData < 0)
@@ -37,14 +24,6 @@ unsigned char* Key::randomKey(unsigned int length)
             throw "could not read from /dev/urandom";
         }
 
-        return myRandomData;
+        return new QByteArray(Utility::toConstChar(myRandomData));
     }
 }
-
-//QByteArray* Key::qRandomKey(unsigned int length)
-//{
-//    unsigned char* randomKey = randomKey(length);
-
-//    QByteArray* qRandomKey = new QByteArray();
-//    qRandomKey->fromRawData(randomKey);
-//}

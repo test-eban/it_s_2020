@@ -1,77 +1,79 @@
 #include "blowfishcrypt.h"
 
-BlowfishCrypt::BlowfishCrypt()
-{
-    qDebug("Blowfish::Blowfish()");
-}
-
 QByteArray* BlowfishCrypt::encrypt(QByteArray* clear)
 {
-    if (m_key == nullptr)
+    if (m_key1 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey(QByteArray* newKey)!";
+        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
     }
     if (m_iv == nullptr)
     {
         throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
     }
 
-    ///////////////////////////////////////////////// encrypt
-    unsigned char* out = new unsigned char[1024*1024];
-//    std::cout << "message: " << clear->toStdString() << "\nout: " << out << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
-    BF_cbc_encrypt(Utility::QByteArrayToConstUChar(clear), out, clear->length(), &m_bfKey, Utility::QByteArrayToUChar(m_iv), BF_ENCRYPT);
-    std::cout << "message: " << clear->toStdString() << "\nout: " << out << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
+    unsigned char* tmp = new unsigned char[clear->length()*8];
+    try
+    {
+        BF_cbc_encrypt(Utility::toConstUnsignedChar(clear), tmp, clear->length(), &m_bfKey, Utility::toUnsignedChar(m_iv), BF_ENCRYPT);
+    }
+    catch (const char* e)
+    {
+        std::cerr << e;
+    }
+    const char* out = Utility::toConstChar(tmp);
 
-
-
-//    ///////////////////////////////////////////////// decrypt
-//    int strLength = strlen((char*)out1);
-//    std::cout << "strlen out1: " << strLength << std::endl;
-//    BF_cbc_encrypt(out1, out2, strLength, &m_bfKey, Utility::QByteArrayToUChar(m_iv), BF_DECRYPT);
-//    std::cout << "message: " << message->toStdString() << "\nout1: " << out1 << "\nout2: " << out2 << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
-    char* tmp = reinterpret_cast<char*> (out);
-
-    return new QByteArray(tmp, std::strlen(tmp));
+    return new QByteArray(out, std::strlen(out));
 }
 
 QByteArray* BlowfishCrypt::decrypt(QByteArray* crypt)
 {
-    ///////////////////////////////////////////////// decrypt
-    int strLength = crypt->length();
-    unsigned char* out = new unsigned char[1024*1024];
-    std::cout << "strlen out: " << strLength << std::endl;
-    BF_cbc_encrypt(Utility::QByteArrayToConstUChar(crypt), out, strLength, &m_bfKey, Utility::QByteArrayToUChar(m_iv), BF_DECRYPT);
-    std::cout << "message: " << crypt->toStdString() << "\nout: " << out << "\nm_iv: " << m_iv->toStdString() << std::endl << std::endl;
+    if (m_key1 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+    }
+    if (m_iv == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+    }
 
-    char* tmp = reinterpret_cast<char*> (out);
+    unsigned char* tmp = new unsigned char[crypt->length()+8];
+    try
+    {
+        BF_cbc_encrypt(Utility::toConstUnsignedChar(crypt), tmp, crypt->length(), &m_bfKey, Utility::toUnsignedChar(m_iv), BF_DECRYPT);
+    }
+    catch (const char* e)
+    {
+        std::cerr << e;
+    }
+    const char* out = Utility::toConstChar(tmp);
 
-    return new QByteArray(tmp, std::strlen(tmp));
+    return new QByteArray(out, std::strlen(out));
 }
 
-void BlowfishCrypt::setKey(QByteArray* newKey)
+void BlowfishCrypt::setKey1(QByteArray* key)
 {
-    if (newKey != nullptr)
+    if (!isWithinBounds(key, 4, 56))
     {
-        if (newKey->length() > maxKeyLengthInBytes)
-        {
-            throw "mimimi";
-        }
-        if (newKey->length() < /*minKeyLengthInBytes*/ 4)
-        {
-            throw "mimimi";
-        }
+        throw "Key must not be null and have a length between 4 and 56 Bytes";
+    }
 
-        int len = newKey->length();
-        m_key = newKey;
-        BF_set_key(&m_bfKey, len, Utility::QByteArrayToConstUChar(m_key));
+    m_key1 = key;
+    try
+    {
+        BF_set_key(&m_bfKey, key->length(), Utility::toConstUnsignedChar(m_key1));
+    }
+    catch (const char* e)
+    {
+        std::cerr << e;
     }
 }
 
 void BlowfishCrypt::setIv(QByteArray *iv)
 {
-    if (iv->length() <= 4)
+    if (!isWithinBounds(iv, 8, 8))
     {
-        throw "Initialization vector must be exactly 8 byte long!";
+        throw "Initialization vector must not be null and should be exactly 8 bytes long!";
     }
+
     m_iv = new QByteArray(*iv);
 }
