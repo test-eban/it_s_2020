@@ -5,6 +5,7 @@
 #include <QByteArray>
 #include "cstring"
 #include "openssl/sha.h"
+#include "openssl/err.h"
 
 /**
  * @brief   This class serves as an utility-class, as the name suggests.
@@ -12,6 +13,7 @@
  *          Due to the repeated use of some of the ways to handle certain data-types
  *          or specific behaviour I defined said ways with methods. This ensures we can
  *          change a repeatedly used behaviour by only changing the associated method.
+ *          Also it is the result of me being a bit lazy...
  * @author S. Laddach
  */
 class Utility
@@ -22,6 +24,7 @@ public:
      * @param input input content
      * @param inputLen length of the input
      * @return the hashed input
+     * @see https://en.wikipedia.org/wiki/SHA-2
      * @see https://www.openssl.org/docs/man1.0.2/man3/SHA512.html
      */
     static QByteArray* Sha512(QByteArray* input, unsigned int inputLen);

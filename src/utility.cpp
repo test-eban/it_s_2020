@@ -9,10 +9,11 @@ QByteArray* Utility::Sha512(QByteArray* input, unsigned int inputLen)
         SHA512(in, inputLen, out);
     } catch (const char* e)
     {
-        std::cerr << e;
+        ERR_print_errors_fp(stderr);
+        abort();
     }
 
-    return new QByteArray(toConstChar(out));
+    return new QByteArray(toConstChar(out), SHA512_DIGEST_LENGTH);
 }
 
 const char* Utility::toConstChar(char* chr)

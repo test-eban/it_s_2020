@@ -18,7 +18,7 @@ QByteArray* BlowfishCrypt::encrypt(QByteArray* clear)
     }
     catch (const char* e)
     {
-        std::cerr << e;
+        printErrorAndAbort();
     }
     const char* out = Utility::toConstChar(tmp);
 
@@ -43,7 +43,7 @@ QByteArray* BlowfishCrypt::decrypt(QByteArray* crypt)
     }
     catch (const char* e)
     {
-        std::cerr << e;
+        printErrorAndAbort();
     }
     const char* out = Utility::toConstChar(tmp);
 
@@ -64,7 +64,7 @@ void BlowfishCrypt::setKey1(QByteArray* key)
     }
     catch (const char* e)
     {
-        std::cerr << e;
+        printErrorAndAbort();
     }
 }
 

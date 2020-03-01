@@ -9,6 +9,8 @@
  * @brief   This class provides everything that is necessary to encrypt/decrypt the contents of a given QByteArray with the Blowfish cipher.
  *          The Blowfish cipher is a symmetric-key block cipher.
  * @extends CryptClassBase
+ * @see https://en.wikipedia.org/wiki/Blowfish_(cipher)
+ * @see https://www.openssl.org/docs/man1.0.2/man3/blowfish.html
  * @author S. Laddach
  */
 class BlowfishCrypt: public CryptClassBase

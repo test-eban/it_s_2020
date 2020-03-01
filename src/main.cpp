@@ -66,20 +66,28 @@ int main(int argc, char *argv[])
 //////////////////////////////////////////////////// crypt 3DES
 
 
-//////////////////////////////////////////////////// rand key
-//    QByteArray* key = Key::randomKey(64);
-//    std::cout << "1234567890123456789012345678901234567890123456789012345679801234" << std::endl;
-//    std::cout << key->toStdString() << std::endl;
-//    std::cout << sizeof(key->data()) << std::endl;
-//////////////////////////////////////////////////// rand key
-
-
 //////////////////////////////////////////////////// sha512
 //    QByteArray* toHash = new QByteArray("Wahrheit ist tut weh, neh?!");
 //    QByteArray* out = Utility::Sha512(toHash, toHash->length());
 //    std::cout << "SHA512: " <<std::endl << out->toStdString() << std::endl;
 //    std::cout << out->toHex().toStdString() << std::endl;
 //////////////////////////////////////////////////// sha512
+
+
+//////////////////////////////////////////////////// passwordToKey
+//    QByteArray* in = new QByteArray("Franz jagt im komplett verwahrlosten Taxi quer durch Bayern");
+//    std::cout << "Key :" << Key::passwordToKey(in, 64)->toHex().toStdString() << std::endl;
+//////////////////////////////////////////////////// key
+
+
+//////////////////////////////////////////////////// randomKey
+    QByteArray* key = Key::randomKey(64);
+    std::cout << key->toStdString() << std::endl;
+    std::cout << key->size() << std::endl;
+    std::cout << key->toHex().toStdString() << std::endl;
+    std::cout << key->toHex().size() << std::endl;
+//////////////////////////////////////////////////// randomKey
+
     //    return a.exec();
 
     return 0;

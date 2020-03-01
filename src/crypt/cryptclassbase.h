@@ -3,6 +3,7 @@
 
 #include <QByteArray>
 #include "limits.h"
+#include "openssl/err.h"
 /**
  * @brief   This class serves as a base class for all crypt-classes, meaning AesCrypt, BlowfishCrypt, TripleDesCrypt.
  *          Provides basic setter and getter for m_key1 and iv that can be overwritten. Also provides isWithinBounds for QByteArray's.
@@ -56,7 +57,7 @@ public:
 
 protected:
     /**
-     * @brief This class checks if the given array-length is within the provided bounds.
+     * @brief This method checks if the given array-length is within the provided bounds.
      * @param array which length has to be within the provided bounds
      * @param lowerBound defines the minimal length (arr-length must be higher)
      * @param upperBound defines the maximal length (arr-length must be lower)
@@ -64,6 +65,11 @@ protected:
      *          false - if the arr is not within bounds
      */
     static bool isWithinBounds(QByteArray* arr, int lowerBound, int upperBound);
+
+    /**
+     * @brief This method makes use of
+     */
+    [[noreturn]] static void printErrorAndAbort();
 
     /** QByteArray that holds the key1 */
     QByteArray* m_key1;

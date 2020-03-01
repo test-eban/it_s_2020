@@ -46,3 +46,9 @@ bool CryptClassBase::isWithinBounds(QByteArray* arr, int lowerBound, int upperBo
 
     return result;
 }
+
+void CryptClassBase::printErrorAndAbort()
+{
+    ERR_print_errors_fp(stderr);
+    abort();
+}

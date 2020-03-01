@@ -2,6 +2,10 @@
 
 QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
 {
+    if (keyLength < 0 || keyLength > 64)
+    {
+        throw "keyLength must be between 0 and 64";
+    }
     QByteArray* result = Utility::Sha512(password, password->length());
     result->resize(keyLength);
     return result;
@@ -24,6 +28,6 @@ QByteArray* Key::randomKey(unsigned int length)
             throw "could not read from /dev/urandom";
         }
 
-        return new QByteArray(Utility::toConstChar(myRandomData));
+        return new QByteArray(Utility::toConstChar(myRandomData), length);
     }
 }

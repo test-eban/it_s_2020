@@ -17,15 +17,15 @@ class Key
 {
 public:
     /**
-     * @brief This method generates a key from a given password.
+     * @brief This method generates a key from a given password. The max. length of the generated key is 64 Bytes.
      * @param password source password from which the key is generated.
-     * @param keyLength length of the resulting key
+     * @param keyLength length of the resulting key. Must be between 0 and 64.
      * @return the resulting key
      */
     static QByteArray* passwordToKey(QByteArray* password, int keyLength);
 
     /**
-     * @brief This class generates a random key using /dev/urandom. urandom is more stable than random @todo
+     * @brief This class generates a random key using /dev/urandom. urandom is more stable than random.
      * @param length defines the length of the output
      * @return the resulting random key having the length length
      */

@@ -6,12 +6,14 @@
 
 #include <openssl/aes.h>
 #include <openssl/evp.h>
-#include <openssl/err.h>
 
 /**
  * @brief   This class provides everything that is necessary to encrypt/decrypt the contents of a given QByteArray with the AES cipher.
  *          The AES cipher is a symmetric-key algorithm.
  * @extends CryptClassBase
+ * @see https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+ * @see https://wiki.openssl.org/index.php/AES
+ * @see https://www.openssl.org/docs/manmaster/man3/EVP_aes_256_cbc.html
  * @author S. Laddach
  */
 class AesCrypt: public CryptClassBase
