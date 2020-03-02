@@ -2,10 +2,7 @@
 #define AES_H
 
 #include "cryptclassbase.h"
-#include "../utility.h"
-
-#include <openssl/aes.h>
-#include <openssl/evp.h>
+#include "utility.h"
 
 /**
  * @brief   This class provides everything that is necessary to encrypt/decrypt the contents of a given QByteArray with the AES cipher.
@@ -16,7 +13,7 @@
  * @see https://www.openssl.org/docs/manmaster/man3/EVP_aes_256_cbc.html
  * @author S. Laddach
  */
-class AesCrypt: public CryptClassBase
+class SYMMETRICCIPHERS_EXPORT AesCrypt: public CryptClassBase
 {
 public:
     /**

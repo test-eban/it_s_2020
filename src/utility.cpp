@@ -1,4 +1,7 @@
 #include "utility.h"
+#include "cstring"
+#include "openssl/sha.h"
+#include "openssl/err.h"
 
 QByteArray* Utility::Sha512(QByteArray* input, unsigned int inputLen)
 {

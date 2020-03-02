@@ -1,4 +1,6 @@
 #include "blowfishcrypt.h"
+#include <openssl/blowfish.h>
+#include "cstring"
 
 QByteArray* BlowfishCrypt::encrypt(QByteArray* clear)
 {
@@ -14,13 +16,13 @@ QByteArray* BlowfishCrypt::encrypt(QByteArray* clear)
     unsigned char* tmp = new unsigned char[clear->length()*8];
     try
     {
-        BF_cbc_encrypt(Utility::toConstUnsignedChar(clear), tmp, clear->length(), &m_bfKey, Utility::toUnsignedChar(m_iv), BF_ENCRYPT);
+        BF_cbc_encrypt(utility.toConstUnsignedChar(clear), tmp, clear->length(), &m_bfKey, utility.toUnsignedChar(m_iv), BF_ENCRYPT);
     }
     catch (const char* e)
     {
         printErrorAndAbort();
     }
-    const char* out = Utility::toConstChar(tmp);
+    const char* out = utility.toConstChar(tmp);
 
     return new QByteArray(out, std::strlen(out));
 }
@@ -39,13 +41,13 @@ QByteArray* BlowfishCrypt::decrypt(QByteArray* crypt)
     unsigned char* tmp = new unsigned char[crypt->length()+8];
     try
     {
-        BF_cbc_encrypt(Utility::toConstUnsignedChar(crypt), tmp, crypt->length(), &m_bfKey, Utility::toUnsignedChar(m_iv), BF_DECRYPT);
+        BF_cbc_encrypt(utility.toConstUnsignedChar(crypt), tmp, crypt->length(), &m_bfKey, utility.toUnsignedChar(m_iv), BF_DECRYPT);
     }
     catch (const char* e)
     {
         printErrorAndAbort();
     }
-    const char* out = Utility::toConstChar(tmp);
+    const char* out = utility.toConstChar(tmp);
 
     return new QByteArray(out, std::strlen(out));
 }
@@ -60,7 +62,7 @@ void BlowfishCrypt::setKey1(QByteArray* key)
     m_key1 = key;
     try
     {
-        BF_set_key(&m_bfKey, key->length(), Utility::toConstUnsignedChar(m_key1));
+        BF_set_key(&m_bfKey, key->length(), utility.toConstUnsignedChar(m_key1));
     }
     catch (const char* e)
     {

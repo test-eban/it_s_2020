@@ -1,15 +1,15 @@
 #ifndef CRYPTCLASSBASE_H
 #define CRYPTCLASSBASE_H
 
+#include "SymmetricCiphers_global.h"
+#include "utility.h"
 #include <QByteArray>
-#include "limits.h"
-#include "openssl/err.h"
 /**
  * @brief   This class serves as a base class for all crypt-classes, meaning AesCrypt, BlowfishCrypt, TripleDesCrypt.
  *          Provides basic setter and getter for m_key1 and iv that can be overwritten. Also provides isWithinBounds for QByteArray's.
  * @author S. Laddach
  */
-class CryptClassBase
+class SYMMETRICCIPHERS_EXPORT CryptClassBase
 {
 public:
     /**
@@ -75,6 +75,8 @@ protected:
     QByteArray* m_key1;
     /** QByteArray that holds the initialization vector */
     QByteArray* m_iv;
+    /** Utility object */
+    Utility utility;
 };
 
 #endif // CRYPTCLASSBASE_H

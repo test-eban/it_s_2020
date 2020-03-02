@@ -1,16 +1,18 @@
 #include "tripledescrypt.h"
+#include "openssl/des.h"
+#include "cstring"
 
 QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
 {
     /* preparing fields */
-    const unsigned char* clearText = Utility::toConstUnsignedChar(clear);
-    unsigned char* cryptText = new unsigned char[std::strlen(Utility::toConstChar(clearText))];
+    const unsigned char* clearText = utility.toConstUnsignedChar(clear);
+    unsigned char* cryptText = new unsigned char[std::strlen(utility.toConstChar(clearText))];
 
     /* preparing cipher specific fields */
-    unsigned char* uKey1 = Utility::toUnsignedChar(m_key1);
-    unsigned char* uKey2 = Utility::toUnsignedChar(m_key2);
-    unsigned char* uKey3 = Utility::toUnsignedChar(m_key3);
-    unsigned char* uIv  = Utility::toUnsignedChar(m_iv);
+    unsigned char* uKey1 = utility.toUnsignedChar(m_key1);
+    unsigned char* uKey2 = utility.toUnsignedChar(m_key2);
+    unsigned char* uKey3 = utility.toUnsignedChar(m_key3);
+    unsigned char* uIv  = utility.toUnsignedChar(m_iv);
 
     DES_cblock key1 = { uKey1[0], uKey1[1], uKey1[2], uKey1[3], uKey1[4], uKey1[5], uKey1[6], uKey1[7] };
     DES_cblock key2 = { uKey2[0], uKey2[1], uKey2[2], uKey2[3], uKey2[4], uKey2[5], uKey2[6], uKey2[7] };
@@ -28,26 +30,26 @@ QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
     /* execute */
     try
     {
-        DES_ede3_cbc_encrypt(clearText, cryptText, std::strlen(Utility::toConstChar(clearText)), &schKey1, &schKey2, &schKey3, &iv, DES_ENCRYPT);
+        DES_ede3_cbc_encrypt(clearText, cryptText, std::strlen(utility.toConstChar(clearText)), &schKey1, &schKey2, &schKey3, &iv, DES_ENCRYPT);
     } catch (const char* e)
     {
         printErrorAndAbort();
     }
 
-    return new QByteArray(Utility::toConstChar(cryptText));
+    return new QByteArray(utility.toConstChar(cryptText));
 }
 
 QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
 {
     /* preparing fields */
-    const unsigned char* cryptText = Utility::toConstUnsignedChar(crypt);
-    unsigned char* clearText = new unsigned char[std::strlen(Utility::toConstChar(cryptText))];
+    const unsigned char* cryptText = utility.toConstUnsignedChar(crypt);
+    unsigned char* clearText = new unsigned char[std::strlen(utility.toConstChar(cryptText))];
 
     /* preparing cipher specific fields */
-    unsigned char* uKey1 = Utility::toUnsignedChar(m_key1);
-    unsigned char* uKey2 = Utility::toUnsignedChar(m_key2);
-    unsigned char* uKey3 = Utility::toUnsignedChar(m_key3);
-    unsigned char* uIv  = Utility::toUnsignedChar(m_iv);
+    unsigned char* uKey1 = utility.toUnsignedChar(m_key1);
+    unsigned char* uKey2 = utility.toUnsignedChar(m_key2);
+    unsigned char* uKey3 = utility.toUnsignedChar(m_key3);
+    unsigned char* uIv  = utility.toUnsignedChar(m_iv);
 
     DES_cblock key1 = { uKey1[0], uKey1[1], uKey1[2], uKey1[3], uKey1[4], uKey1[5], uKey1[6], uKey1[7] };
     DES_cblock key2 = { uKey2[0], uKey2[1], uKey2[2], uKey2[3], uKey2[4], uKey2[5], uKey2[6], uKey2[7] };
@@ -65,13 +67,13 @@ QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
     /* execute */
     try
     {
-        DES_ede3_cbc_encrypt(cryptText, clearText, std::strlen(Utility::toConstChar(cryptText)), &schKey1, &schKey2, &schKey3, &iv, DES_DECRYPT);
+        DES_ede3_cbc_encrypt(cryptText, clearText, std::strlen(utility.toConstChar(cryptText)), &schKey1, &schKey2, &schKey3, &iv, DES_DECRYPT);
     } catch (const char* e)
     {
         printErrorAndAbort();
     }
 
-    return new QByteArray(Utility::toConstChar(clearText));
+    return new QByteArray(utility.toConstChar(clearText));
 }
 
 void TripleDesCrypt::setKey1(QByteArray* key)

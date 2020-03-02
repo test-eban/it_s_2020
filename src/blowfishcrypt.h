@@ -2,7 +2,7 @@
 #define BLOWFISH_H
 
 #include "cryptclassbase.h"
-#include "../utility.h"
+#include "utility.h"
 #include <openssl/blowfish.h>
 
 /**
@@ -13,7 +13,7 @@
  * @see https://www.openssl.org/docs/man1.0.2/man3/blowfish.html
  * @author S. Laddach
  */
-class BlowfishCrypt: public CryptClassBase
+class SYMMETRICCIPHERS_EXPORT BlowfishCrypt: public CryptClassBase
 {
 public:
     /**

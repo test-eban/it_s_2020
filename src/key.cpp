@@ -1,4 +1,6 @@
 #include "key.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
 {
@@ -6,7 +8,7 @@ QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
     {
         throw "keyLength must be between 0 and 64";
     }
-    QByteArray* result = Utility::Sha512(password, password->length());
+    QByteArray* result = utility.Sha512(password, password->length());
     result->resize(keyLength);
     return result;
 }
@@ -28,6 +30,6 @@ QByteArray* Key::randomKey(unsigned int length)
             throw "could not read from /dev/urandom";
         }
 
-        return new QByteArray(Utility::toConstChar(myRandomData), length);
+        return new QByteArray(utility.toConstChar(myRandomData), length);
     }
 }

@@ -1,4 +1,6 @@
 #include "cryptclassbase.h"
+#include "limits.h"
+#include "openssl/err.h"
 
 void CryptClassBase::setKey1(QByteArray* key)
 {

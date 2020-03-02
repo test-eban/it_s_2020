@@ -1,12 +1,15 @@
 QT -= gui
 
-CONFIG += c++11 console
-CONFIG -= app_bundle
-
 unix{
   LIBS    += -lcrypto -lssl
   DEFINES += unix
 }
+
+TEMPLATE = lib
+#TEMPLATE = app
+DEFINES += SYMMETRICCIPHERS_LIBRARY
+
+CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -17,29 +20,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-SOURCES += \
-        src/crypt/aescrypt.cpp \
-        src/crypt/blowfishcrypt.cpp \
-        src/crypt/cryptclassbase.cpp \
-        src/key.cpp \
-        src/main.cpp \
-        src/crypt/tripledescrypt.cpp \
-        src/utility.cpp
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0s
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+unix {
+    target.path = /usr/lib
+}
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    src/crypt/aescrypt.h \
-    src/crypt/blowfishcrypt.h \
-    src/crypt/cryptclassbase.h \
-    src/crypt/tripledescrypt.h \
+    src/SymmetricCiphers_global.h \
+    src/aescrypt.h \
+    src/blowfishcrypt.h \
+    src/cryptclassbase.h \
     src/key.h \
+    src/tripledescrypt.h \
     src/utility.h
 
-DISTFILES += \
-    notes.txt
+SOURCES += \
+    main.cpp \
+    src/aescrypt.cpp \
+    src/blowfishcrypt.cpp \
+    src/cryptclassbase.cpp \
+    src/key.cpp \
+    src/tripledescrypt.cpp \
+    src/utility.cpp

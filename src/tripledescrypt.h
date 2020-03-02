@@ -2,9 +2,7 @@
 #define TRIPLEDES_H
 
 #include "cryptclassbase.h"
-#include "../utility.h"
-
-#include "openssl/des.h"
+#include "utility.h"
 
 /**
  * @brief   This class provides everything that is necessary to encrypt/decrypt the contents of a given QByteArray with the 3DES (Triple Key DES) cipher.
@@ -15,7 +13,7 @@
  * @see https://www.openssl.org/docs/man1.1.0/man3/DES_ede3_cbc_encrypt.html
  * @author S. Laddach
  */
-class TripleDesCrypt : public CryptClassBase
+class SYMMETRICCIPHERS_EXPORT TripleDesCrypt : public CryptClassBase
 {
 public:
     /**

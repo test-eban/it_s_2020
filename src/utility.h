@@ -1,14 +1,12 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include <iostream>
+#include "SymmetricCiphers_global.h"
 #include <QByteArray>
-#include "cstring"
-#include "openssl/sha.h"
-#include "openssl/err.h"
 
 /**
  * @brief   This class serves as an utility-class, as the name suggests.
+ *          To use this class in a shared library the methods can't be static.
  *          Its main-use is the Sha512-method, which is used by the Key-class.
  *          Due to the repeated use of some of the ways to handle certain data-types
  *          or specific behaviour I defined said ways with methods. This ensures we can
@@ -16,9 +14,14 @@
  *          Also it is the result of me being a bit lazy...
  * @author S. Laddach
  */
-class Utility
+class SYMMETRICCIPHERS_EXPORT Utility
 {
 public:
+    /**
+      * @brief default constructor.
+      */
+    Utility() = default;
+
     /**
      * @brief This method uses openssl to hash the input with the sha-512-algorithm
      * @param input input content
@@ -78,9 +81,6 @@ public:
      * @return input as unsigned char*
      */
     static unsigned char* toUnsignedChar(const QByteArray* arr);
-
-private:
-    Utility() = default;
 };
 
 #endif // UTILITY_H
