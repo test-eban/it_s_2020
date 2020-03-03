@@ -3,7 +3,7 @@
 #include "openssl/sha.h"
 #include "openssl/err.h"
 
-QByteArray* Utility::Sha512(QByteArray* input, unsigned int inputLen)
+QByteArray* Utility::sha512(QByteArray* input, unsigned int inputLen)
 {
     const unsigned char* in = toConstUnsignedChar(input);
     unsigned char* out = new unsigned char[SHA512_DIGEST_LENGTH];
@@ -53,7 +53,6 @@ const unsigned char* Utility::toConstUnsignedChar(const QByteArray* arr)
 {
     char *chr = new char[arr->size() + 1];
     strcpy(chr, arr->data());
-//    const char* chr = arr->data();
     const unsigned char* cuchr =  toConstUnsignedChar(chr);
 
     return cuchr;

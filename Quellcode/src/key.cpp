@@ -8,7 +8,7 @@ QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
     {
         throw "keyLength must be between 0 and 64";
     }
-    QByteArray* result = utility.Sha512(password, password->length());
+    QByteArray* result = utility.sha512(password, password->length());
     result->resize(keyLength);
     return result;
 }

@@ -2,6 +2,14 @@
 #include "openssl/des.h"
 #include "cstring"
 
+TripleDesCrypt::~TripleDesCrypt()
+{
+    m_iv->fill('0');
+    m_key1->fill('0');
+    m_key2->fill('0');
+    m_key3->fill('0');
+}
+
 QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
 {
     /* preparing fields */
@@ -78,7 +86,7 @@ QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
 
 void TripleDesCrypt::setKey1(QByteArray* key)
 {
-    if (!isWithinBounds(key, 7, 9))
+    if (!isWithinBounds(key, 8, 8))
     {
         throw "Key must not be null or empty and exactly 8 bytes long!";
     }
@@ -87,7 +95,7 @@ void TripleDesCrypt::setKey1(QByteArray* key)
 
 void TripleDesCrypt::setKey2(QByteArray* key)
 {
-    if (!isWithinBounds(key, 7, 9))
+    if (!isWithinBounds(key, 8, 8))
     {
         throw "Key must not be null or empty and exactly 8 bytes long!";
     }
@@ -96,7 +104,7 @@ void TripleDesCrypt::setKey2(QByteArray* key)
 
 void TripleDesCrypt::setKey3(QByteArray* key)
 {
-    if (!isWithinBounds(key, 7, 9))
+    if (!isWithinBounds(key, 8, 8))
     {
         throw "Key must not be null or empty and exactly 8 bytes long!";
     }
@@ -105,7 +113,7 @@ void TripleDesCrypt::setKey3(QByteArray* key)
 
 void TripleDesCrypt::setIv(QByteArray *iv)
 {
-    if (!isWithinBounds(iv, 7, 9))
+    if (!isWithinBounds(iv, 8, 8))
     {
         throw "Iv must not be null or empty and exactly 8 bytes long!";
     }

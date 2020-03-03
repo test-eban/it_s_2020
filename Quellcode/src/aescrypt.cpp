@@ -32,7 +32,7 @@ QByteArray*AesCrypt::encrypt(QByteArray* clear)
     /* Clean up */
     EVP_CIPHER_CTX_free(ctx);
 
-    return new QByteArray(utility.toConstChar(cryptText));
+    return new QByteArray(utility.toConstChar(cryptText), cipherText_len);
 }
 
 QByteArray* AesCrypt::decrypt(QByteArray* crypt)
@@ -65,12 +65,12 @@ QByteArray* AesCrypt::decrypt(QByteArray* crypt)
     /* Clean up */
     EVP_CIPHER_CTX_free(ctx);
 
-    return new QByteArray(utility.toConstChar(cleartext));
+    return new QByteArray(utility.toConstChar(cleartext), cleartext_len);
 }
 
 void AesCrypt::setKey1(QByteArray *key)
 {
-    if (key->length() != 32)
+    if (isWithinBounds(key, 16, 16))
     {
         throw "The length of the aes key must be exactly 32 bytes (256 bit)";
     }
@@ -79,7 +79,7 @@ void AesCrypt::setKey1(QByteArray *key)
 
 void AesCrypt::setIv(QByteArray *iv)
 {
-    if (iv->length() != 0 && iv->length() != 16)
+    if (!isWithinBounds(iv, 16, 16))
     {
         throw "The length of the initialization vector key must be exactly 16 bytes (128 bit)";
     }

@@ -2,6 +2,12 @@
 #include "limits.h"
 #include "openssl/err.h"
 
+CryptClassBase::~CryptClassBase()
+{
+    m_iv->fill('0');
+    m_key1->fill('0');
+}
+
 void CryptClassBase::setKey1(QByteArray* key)
 {
     if(key == nullptr || key->length() == 0)
