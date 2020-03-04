@@ -5,6 +5,15 @@
 
 QByteArray*AesCrypt::encrypt(QByteArray* clear)
 {
+    if (m_key1 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+    }
+    if (m_iv == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+    }
+
     EVP_CIPHER_CTX *ctx;
     int len = 0;
     int cipherText_len = 0;
@@ -37,6 +46,15 @@ QByteArray*AesCrypt::encrypt(QByteArray* clear)
 
 QByteArray* AesCrypt::decrypt(QByteArray* crypt)
 {
+    if (m_key1 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+    }
+    if (m_iv == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+    }
+
     EVP_CIPHER_CTX *ctx;
 
     unsigned char* crypttext = utility.toUnsignedChar(crypt);

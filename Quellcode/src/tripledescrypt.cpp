@@ -12,6 +12,23 @@ TripleDesCrypt::~TripleDesCrypt()
 
 QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
 {
+    if (m_key1 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+    }
+    if (m_key2 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey2(QByteArray* newKey)!";
+    }
+    if (m_key3 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey3(QByteArray* newKey)!";
+    }
+    if (m_iv == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+    }
+
     /* preparing fields */
     const unsigned char* clearText = utility.toConstUnsignedChar(clear);
     unsigned char* cryptText = new unsigned char[std::strlen(utility.toConstChar(clearText))];
@@ -49,6 +66,23 @@ QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
 
 QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
 {
+    if (m_key1 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+    }
+    if (m_key2 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey2(QByteArray* newKey)!";
+    }
+    if (m_key3 == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setKey3(QByteArray* newKey)!";
+    }
+    if (m_iv == nullptr)
+    {
+        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+    }
+
     /* preparing fields */
     const unsigned char* cryptText = utility.toConstUnsignedChar(crypt);
     unsigned char* clearText = new unsigned char[std::strlen(utility.toConstChar(cryptText))];
