@@ -27,7 +27,7 @@ bool blowfishTest()
     std::cout << "clearAgain: " << clearAgain->toStdString() << std::endl;
     blowfish->~BlowfishCrypt();
     std::cout << "=========  end blowfishTest() =========" << std::endl << std::endl;
-    return clearAgain->compare(*clear, Qt::CaseSensitive) == 0;
+    return *clearAgain == *clear;
 }
 
 /**
@@ -52,7 +52,7 @@ bool aesTest()
     std::cout << "clearAgain: " << clearAgain->toStdString() << std::endl;
     aes->~AesCrypt();
     std::cout << "=========  End aesTest() =========" << std::endl << std::endl;
-    return clearAgain->compare(*clear, Qt::CaseSensitive) == 0;
+    return *clearAgain == *clear;
 }
 
 /**
@@ -79,7 +79,7 @@ bool tripleDesTest()
     std::cout << "clearAgain: " << clearAgain->toStdString() << std::endl;
     tdes->~TripleDesCrypt();
     std::cout << "=========  End tripleDesTest() =========" << std::endl << std::endl;
-    return clearAgain->compare(*clear, Qt::CaseSensitive) == 0;
+    return *clearAgain == *clear;
 }
 
 /**
@@ -95,7 +95,7 @@ bool passwordToKeyTest()
     QByteArray* out = key.passwordToKey(in, 64); // output / execute Key::passwordToKey()
     std::cout << "Key(hex) :" << out->toHex().toStdString() << std::endl;
     std::cout << "=========  End passwordToKeyTest() =========" << std::endl << std::endl;
-    return out->toHex().compare("D5C1923948A607A116E705AEB3F5E22226BBCFC5AC53A16D52CFF91A7C83BA682416EFE6E90A8D2FE738A3BEDADF1C6F3BDA1FBACE346E69AF97E3E79C04F966", Qt::CaseSensitive);
+    return out->toHex().toUpper().toStdString() == "D5C1923948A607A116E705AEB3F5E22226BBCFC5AC53A16D52CFF91A7C83BA682416EFE6E90A8D2FE738A3BEDADF1C6F3BDA1FBACE346E69AF97E3E79C04F966";
 }
 
 /**

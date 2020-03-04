@@ -3,6 +3,14 @@
 
 int main(int argc, char *argv[])
 {
-    executeTest();
+    try
+    {
+        executeTest();
+    }
+    catch (const char* e)
+    {
+        std::cerr << e << std::endl;
+    }
+
     return 0;
 }
