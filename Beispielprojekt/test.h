@@ -107,11 +107,11 @@ bool randomKeyTest()
 {
     std::cout << "========= Start randomKeyTest() =========" << std::endl;
     Key key; // new Key-instance
-    QByteArray* rkey = key.randomKey(64); // execute Key::randomKey(int) to get a random key
+    QByteArray* rkey = key.randomKey(32, true); // execute Key::randomKey(int) to get a random key
     std::cout << "random key: " << rkey->toStdString() << std::endl;
     std::cout << "random key(hex): " << rkey->toHex().toStdString() << std::endl;
     std::cout << "=========  End randomKeyTest() =========" << std::endl << std::endl;
-    return rkey->size() == 64;
+    return rkey->size() == 32;
 }
 
 bool executeTest()
@@ -132,7 +132,7 @@ bool executeTest()
     {
         throw "Something seems to be wrong with Key::passwordToKey(QByteArray*, unsigned int)";
     }
-    if (randomKeyTest() == false)
+    if (randomKeyTest() == false) /// maybe exclude this to test the other functions N times
     {
         throw "Something seems to be wrong with the Key::randomKey(int)";
     }

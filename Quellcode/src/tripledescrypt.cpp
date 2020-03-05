@@ -14,19 +14,19 @@ QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
 {
     if (m_key1 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+        throw "You first must run TripleDesCrypt::setKey1(QByteArray* newKey)!";
     }
     if (m_key2 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey2(QByteArray* newKey)!";
+        throw "You first must run TripleDesCrypt::setKey2(QByteArray* newKey)!";
     }
     if (m_key3 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey3(QByteArray* newKey)!";
+        throw "You first must run TripleDesCrypt::setKey3(QByteArray* newKey)!";
     }
     if (m_iv == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+        throw "You first must run TripleDesCrypt::setIv(QByteArray* iv)!";
     }
 
     /* preparing fields */
@@ -45,9 +45,12 @@ QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
     DES_cblock iv = { uIv[0], uIv[1], uIv[2], uIv[3], uIv[4], uIv[5], uIv[6], uIv[7] };
     DES_key_schedule schKey1,schKey2,schKey3;
 
+    DES_set_odd_parity(&key1);
+    DES_set_odd_parity(&key2);
+    DES_set_odd_parity(&key3);
     DES_set_odd_parity(&iv);
 
-    if (-2 == DES_set_key_checked(&key1, &schKey1) || -2 == DES_set_key_checked(&key2, &schKey2) || -2 == DES_set_key_checked(&key3, &schKey3))
+    if (DES_set_key_checked(&key1, &schKey1) < 0 || DES_set_key_checked(&key2, &schKey2) < 0 || DES_set_key_checked(&key3, &schKey3) < 0)
     {
         throw "One of the keys used poses a weak key.";
     }
@@ -61,26 +64,26 @@ QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
         printErrorAndAbort();
     }
 
-    return new QByteArray(utility.toConstChar(cryptText));
+    return new QByteArray(utility.toConstChar(cryptText), strlen(utility.toConstChar(cryptText)));
 }
 
 QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
 {
     if (m_key1 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+        throw "You first must run TripleDesCrypt::setKey1(QByteArray* newKey)!";
     }
     if (m_key2 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey2(QByteArray* newKey)!";
+        throw "You first must run TripleDesCrypt::setKey2(QByteArray* newKey)!";
     }
     if (m_key3 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey3(QByteArray* newKey)!";
+        throw "You first must run TripleDesCrypt::setKey3(QByteArray* newKey)!";
     }
     if (m_iv == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+        throw "You first must run TripleDesCrypt::setIv(QByteArray* iv)!";
     }
 
     /* preparing fields */
@@ -99,11 +102,14 @@ QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
     DES_cblock iv = { uIv[0], uIv[1], uIv[2], uIv[3], uIv[4], uIv[5], uIv[6], uIv[7] };
     DES_key_schedule schKey1,schKey2,schKey3;
 
+    DES_set_odd_parity(&key1);
+    DES_set_odd_parity(&key2);
+    DES_set_odd_parity(&key3);
     DES_set_odd_parity(&iv);
 
-    if (-2 == DES_set_key_checked(&key1, &schKey1) || -2 == DES_set_key_checked(&key2, &schKey2) || -2 == DES_set_key_checked(&key3, &schKey3))
+    if (DES_set_key_checked(&key1, &schKey1) == -2 || DES_set_key_checked(&key2, &schKey2) == -2 || DES_set_key_checked(&key3, &schKey3) == -2) // ignoring the -1 result, because it only points out the wrong parity
     {
-        throw "One of the keys used poses a weak key.";
+        throw "One of the keys used is a weak key.";
     }
 
     /* execute */
@@ -115,7 +121,7 @@ QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
         printErrorAndAbort();
     }
 
-    return new QByteArray(utility.toConstChar(clearText));
+    return new QByteArray(utility.toConstChar(clearText), strlen(utility.toConstChar(clearText)));
 }
 
 void TripleDesCrypt::setKey1(QByteArray* key)

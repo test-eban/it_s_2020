@@ -1,6 +1,9 @@
 #include "key.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include "cstring"
+
+#include <iostream>
 
 QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
 {
@@ -13,23 +16,34 @@ QByteArray* Key::passwordToKey(QByteArray* password, int keyLength)
     return result;
 }
 
-QByteArray* Key::randomKey(unsigned int length)
+QByteArray* Key::randomKey(unsigned int length, bool printProgress)
 {
-    int randomData = open("/dev/urandom", O_RDONLY);
-    if (randomData < 0)
+    int randomDataFd = open("/dev/random", O_RDONLY); // open file
+    if (randomDataFd < 0)
     {
-        throw "/dev/urandom could not be opened";
+        throw "/dev/random could not be opened";
     }
-    else
+
+    unsigned char * randomData = new unsigned char [length];
+    size_t randomDataLen = 0;
+    while (randomDataLen < length)
     {
-        unsigned char * myRandomData = new unsigned char [length+1];
-        ssize_t result = read(randomData, myRandomData, length);
+        ssize_t result = read(randomDataFd, randomData + randomDataLen, length - randomDataLen); // fill n bytes of the buffer
 
         if (result < 0)
         {
             throw "could not read from /dev/urandom";
         }
+        randomDataLen += result;
 
-        return new QByteArray(utility.toConstChar(myRandomData), length);
+        if (printProgress)
+        {
+            std::cout << "Progress: " << randomDataLen << "/" << length << std::endl;
+            std::cout << "Key: " << randomData << std::endl;
+        }
+        // repeat if the buffer is not yet completely filled
     }
+    close(randomDataFd); // close file
+
+    return new QByteArray(utility.toConstChar(randomData), length);
 }

@@ -26,9 +26,10 @@ public:
     /**
      * @brief This class generates a random key using /dev/urandom. urandom is more stable than random.
      * @param length defines the length of the output
+     * @param printProgress defines if the progress of the keygeneration will be printed
      * @return the resulting random key having the length length
      */
-    QByteArray* randomKey(unsigned int length);
+    QByteArray* randomKey(unsigned int length, bool printProgress = false);
 
 private:
     /** Utlity object */

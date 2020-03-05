@@ -3,15 +3,15 @@
 #include <openssl/evp.h>
 #include "cstring"
 
-QByteArray*AesCrypt::encrypt(QByteArray* clear)
+QByteArray* AesCrypt::encrypt(QByteArray* clear)
 {
     if (m_key1 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+        throw "You first must run AesCrypt::setKey1(QByteArray* newKey)!";
     }
     if (m_iv == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+        throw "You first must run AesCrypt::setIv(QByteArray* iv)!";
     }
 
     EVP_CIPHER_CTX *ctx;
@@ -48,11 +48,11 @@ QByteArray* AesCrypt::decrypt(QByteArray* crypt)
 {
     if (m_key1 == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setKey1(QByteArray* newKey)!";
+        throw "You first must run AesCrypt::setKey1(QByteArray* newKey)!";
     }
     if (m_iv == nullptr)
     {
-        throw "You first must run BlowfishCrypt::setIv(QByteArray* iv)!";
+        throw "You first must run AesCrypt::setIv(QByteArray* iv)!";
     }
 
     EVP_CIPHER_CTX *ctx;
