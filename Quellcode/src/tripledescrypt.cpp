@@ -39,9 +39,9 @@ QByteArray* TripleDesCrypt::encrypt(QByteArray* clear)
     unsigned char* uKey3 = utility.toUnsignedChar(m_key3);
     unsigned char* uIv  = utility.toUnsignedChar(m_iv);
 
-    DES_cblock key1 = { uKey1[0], uKey1[1], uKey1[2], uKey1[3], uKey1[4], uKey1[5], uKey1[6], uKey1[7] };
-    DES_cblock key2 = { uKey2[0], uKey2[1], uKey2[2], uKey2[3], uKey2[4], uKey2[5], uKey2[6], uKey2[7] };
-    DES_cblock key3 = { uKey3[0], uKey3[1], uKey3[2], uKey3[3], uKey3[4], uKey3[5], uKey3[6], uKey3[7] };
+    DES_cblock key1 = { uKey1[0], uKey1[1], uKey1[2], uKey1[3], uKey1[4], uKey1[5], uKey1[6]};
+    DES_cblock key2 = { uKey2[0], uKey2[1], uKey2[2], uKey2[3], uKey2[4], uKey2[5], uKey2[6]};
+    DES_cblock key3 = { uKey3[0], uKey3[1], uKey3[2], uKey3[3], uKey3[4], uKey3[5], uKey3[6]};
     DES_cblock iv = { uIv[0], uIv[1], uIv[2], uIv[3], uIv[4], uIv[5], uIv[6], uIv[7] };
     DES_key_schedule schKey1,schKey2,schKey3;
 
@@ -96,9 +96,9 @@ QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
     unsigned char* uKey3 = utility.toUnsignedChar(m_key3);
     unsigned char* uIv  = utility.toUnsignedChar(m_iv);
 
-    DES_cblock key1 = { uKey1[0], uKey1[1], uKey1[2], uKey1[3], uKey1[4], uKey1[5], uKey1[6], uKey1[7] };
-    DES_cblock key2 = { uKey2[0], uKey2[1], uKey2[2], uKey2[3], uKey2[4], uKey2[5], uKey2[6], uKey2[7] };
-    DES_cblock key3 = { uKey3[0], uKey3[1], uKey3[2], uKey3[3], uKey3[4], uKey3[5], uKey3[6], uKey3[7] };
+    DES_cblock key1 = { uKey1[0], uKey1[1], uKey1[2], uKey1[3], uKey1[4], uKey1[5], uKey1[6] };
+    DES_cblock key2 = { uKey2[0], uKey2[1], uKey2[2], uKey2[3], uKey2[4], uKey2[5], uKey2[6] };
+    DES_cblock key3 = { uKey3[0], uKey3[1], uKey3[2], uKey3[3], uKey3[4], uKey3[5], uKey3[6] };
     DES_cblock iv = { uIv[0], uIv[1], uIv[2], uIv[3], uIv[4], uIv[5], uIv[6], uIv[7] };
     DES_key_schedule schKey1,schKey2,schKey3;
 
@@ -126,7 +126,7 @@ QByteArray* TripleDesCrypt::decrypt(QByteArray* crypt)
 
 void TripleDesCrypt::setKey1(QByteArray* key)
 {
-    if (!isWithinBounds(key, 8, 8))
+    if (!isWithinBounds(key, 7, 7))
     {
         throw "Key must not be null or empty and exactly 8 bytes long!";
     }
@@ -135,7 +135,7 @@ void TripleDesCrypt::setKey1(QByteArray* key)
 
 void TripleDesCrypt::setKey2(QByteArray* key)
 {
-    if (!isWithinBounds(key, 8, 8))
+    if (!isWithinBounds(key, 7, 7))
     {
         throw "Key must not be null or empty and exactly 8 bytes long!";
     }
@@ -144,7 +144,7 @@ void TripleDesCrypt::setKey2(QByteArray* key)
 
 void TripleDesCrypt::setKey3(QByteArray* key)
 {
-    if (!isWithinBounds(key, 8, 8))
+    if (!isWithinBounds(key, 7, 7))
     {
         throw "Key must not be null or empty and exactly 8 bytes long!";
     }

@@ -66,9 +66,9 @@ bool tripleDesTest()
     QByteArray* clear = new QByteArray("The quick brown fox jumps over the lazy dog");
 
     TripleDesCrypt* tdes = new TripleDesCrypt(); // new instance
-    tdes->setKey1(new QByteArray("12345678")); // set key 1
-    tdes->setKey2(new QByteArray("23456789")); // set key 2
-    tdes->setKey3(new QByteArray("34567890")); // set key 3
+    tdes->setKey1(new QByteArray("1234567")); // set key 1
+    tdes->setKey2(new QByteArray("2345678")); // set key 2
+    tdes->setKey3(new QByteArray("3456789")); // set key 3
     tdes->setIv(new QByteArray("87654321")); // set iv
 
     QByteArray* crypt = tdes->encrypt(clear); // encrypt
